@@ -5,9 +5,9 @@ import interior from "@/assets/interior.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Saffron & Spice" },
+      { title: "About — Khayyam, The Food Pavilion" },
       { name: "description", content: "Our story, our chef, and our philosophy of bringing Pakistani heritage to the modern table." },
-      { property: "og:title", content: "About — Saffron & Spice" },
+      { property: "og:title", content: "About — Khayyam, The Food Pavilion" },
       { property: "og:description", content: "Our story and philosophy." },
     ],
   }),
@@ -27,10 +27,10 @@ function AboutPage() {
           <div>
             <h2 className="font-display text-3xl text-foreground mb-4">Our story</h2>
             <p>
-              Founded in 2014 on Lahore's iconic MM Alam Road, Saffron &amp; Spice
-              began as a love letter to the food of our grandmothers. Over a decade later,
-              we've grown into one of the city's most celebrated dining rooms — without ever
-              losing the warmth of a family table.
+              Born on Faisalabad's Canal Expy, Khayyam — The Food Pavilion began as
+              a love letter to the food of our grandmothers. Today we've grown into one
+              of the city's most welcoming dining rooms — without ever losing the warmth
+              of a family table.
             </p>
           </div>
           <div>
@@ -52,8 +52,8 @@ function AboutPage() {
           <div>
             <h2 className="font-display text-3xl text-foreground mb-4">Find us</h2>
             <p>
-              12 MM Alam Road, Gulberg III, Lahore.<br />
-              Open daily for lunch and dinner.
+              Canal Expy, Faisal Town Canal Road, Faisalabad, 38000.<br />
+              Open daily for lunch and dinner. Call 0301 2266642.
             </p>
           </div>
         </div>

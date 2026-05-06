@@ -9,10 +9,10 @@ import interiorImg from "@/assets/interior.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Saffron & Spice — Modern Pakistani & Continental Dining" },
-      { name: "description", content: "An elegant Lahore dining destination serving Pakistani classics, continental favourites, and indulgent desserts. Reserve your table." },
-      { property: "og:title", content: "Saffron & Spice — Modern Pakistani & Continental Dining" },
-      { property: "og:description", content: "Elegant Pakistani, continental & dessert dining in Lahore. Reserve your table." },
+      { title: "Khayyam — The Food Pavilion · Pakistani & Continental Dining in Faisalabad" },
+      { name: "description", content: "An elegant Faisalabad dining destination serving Pakistani classics, continental favourites, and indulgent desserts. Reserve your table." },
+      { property: "og:title", content: "Khayyam — The Food Pavilion" },
+      { property: "og:description", content: "Elegant Pakistani, continental & dessert dining on Canal Expy, Faisalabad. Reserve your table." },
       { property: "og:image", content: heroImg },
     ],
   }),
@@ -40,7 +40,7 @@ function Index() {
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background" />
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <p className="text-xs md:text-sm uppercase tracking-[0.4em] text-primary mb-6">
-            Lahore · Est. 2014
+            Faisalabad · Canal Expy
           </p>
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.05] mb-6">
             A Symphony of <em className="text-primary not-italic">Spice</em><br />and Soul
@@ -98,12 +98,12 @@ function Index() {
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-primary mb-4">Our story</p>
-            <h2 className="font-display text-4xl md:text-5xl mb-6">A decade of quiet obsession.</h2>
+            <h2 className="font-display text-4xl md:text-5xl mb-6">A quiet obsession with flavour.</h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Saffron &amp; Spice was born from a simple belief — that Pakistani cuisine deserves
-              the same reverence as the world's great culinary traditions. Our kitchen blends
-              century-old recipes with modern technique, sourcing the finest spices from the
-              subcontinent and the freshest produce from local farms.
+              Khayyam — The Food Pavilion was born from a simple belief: that Pakistani cuisine
+              deserves the same reverence as the world's great culinary traditions. Our kitchen
+              blends century-old recipes with modern technique, sourcing the finest spices from
+              the subcontinent and the freshest produce from local farms.
             </p>
             <Link to="/about" className="text-primary uppercase tracking-widest text-sm border-b border-primary pb-1">
               Read our story

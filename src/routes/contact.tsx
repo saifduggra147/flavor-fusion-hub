@@ -5,9 +5,9 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Saffron & Spice" },
-      { name: "description", content: "Visit, call, or email us. We're on MM Alam Road, Lahore." },
-      { property: "og:title", content: "Contact — Saffron & Spice" },
+      { title: "Contact — Khayyam, The Food Pavilion" },
+      { name: "description", content: "Visit, call, or email Khayyam — The Food Pavilion on Canal Expy, Faisalabad." },
+      { property: "og:title", content: "Contact — Khayyam, The Food Pavilion" },
       { property: "og:description", content: "Get in touch with our team." },
     ],
   }),
@@ -24,9 +24,9 @@ function ContactPage() {
         </div>
         <div className="grid md:grid-cols-2 gap-12">
           <div className="space-y-8">
-            <Detail icon={<MapPin />} label="Address">12 MM Alam Road, Gulberg III, Lahore</Detail>
-            <Detail icon={<Phone />} label="Phone">+92 300 1234567</Detail>
-            <Detail icon={<Mail />} label="Email">hello@saffronandspice.pk</Detail>
+            <Detail icon={<MapPin />} label="Address">Canal Expy, Faisal Town Canal Road, Faisalabad, 38000, Pakistan</Detail>
+            <Detail icon={<Phone />} label="Phone">0301 2266642</Detail>
+            <Detail icon={<Mail />} label="Email">hello@khayyampavilion.pk</Detail>
             <Detail icon={<Clock />} label="Hours">
               Monday – Thursday · 12pm – 11pm<br />
               Friday – Sunday · 12pm – 1am
@@ -35,7 +35,7 @@ function ContactPage() {
           <div className="aspect-square md:aspect-auto rounded-sm overflow-hidden border border-border">
             <iframe
               title="Map"
-              src="https://www.google.com/maps?q=MM+Alam+Road+Lahore&output=embed"
+              src="https://www.google.com/maps?q=Canal+Expy+Faisal+Town+Canal+Road+Faisalabad&output=embed"
               className="w-full h-full min-h-[400px]"
               loading="lazy"
             />

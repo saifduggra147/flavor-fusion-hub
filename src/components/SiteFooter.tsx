@@ -7,10 +7,10 @@ export function SiteFooter() {
       <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-10">
         <div className="md:col-span-2">
           <h3 className="font-display text-2xl">
-            <span className="text-primary">Saffron</span> &amp; Spice
+            <span className="text-primary">Khayyam</span> — The Food Pavilion
           </h3>
           <p className="mt-4 text-sm text-muted-foreground max-w-md leading-relaxed">
-            A modern fine-dining destination celebrating the soul of Pakistani cuisine,
+            A modern fine-dining destination in Faisalabad celebrating the soul of Pakistani cuisine,
             classic continental favourites, and indulgent desserts.
           </p>
           <div className="flex gap-4 mt-6">
@@ -21,9 +21,9 @@ export function SiteFooter() {
         <div>
           <h4 className="text-xs uppercase tracking-widest text-primary mb-4">Visit</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
-            <li className="flex gap-2"><MapPin size={16} className="mt-0.5 text-primary" /> 12 MM Alam Road, Lahore</li>
-            <li className="flex gap-2"><Phone size={16} className="mt-0.5 text-primary" /> +92 300 1234567</li>
-            <li className="flex gap-2"><Mail size={16} className="mt-0.5 text-primary" /> hello@saffronandspice.pk</li>
+            <li className="flex gap-2"><MapPin size={16} className="mt-0.5 text-primary" /> Canal Expy, Faisal Town Canal Road, Faisalabad</li>
+            <li className="flex gap-2"><Phone size={16} className="mt-0.5 text-primary" /> 0301 2266642</li>
+            <li className="flex gap-2"><Mail size={16} className="mt-0.5 text-primary" /> hello@khayyampavilion.pk</li>
           </ul>
         </div>
         <div>
@@ -41,7 +41,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border py-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Saffron &amp; Spice. All rights reserved.
+        © {new Date().getFullYear()} Khayyam — The Food Pavilion. All rights reserved.
       </div>
     </footer>
   );

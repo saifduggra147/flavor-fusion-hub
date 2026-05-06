@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo.jpg";
 
 const links = [
   { to: "/", label: "Home" },
   { to: "/menu", label: "Menu" },
+  { to: "/starters", label: "Starters" },
+  { to: "/halls", label: "Halls" },
   { to: "/gallery", label: "Gallery" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
@@ -15,11 +18,11 @@ export function SiteHeader() {
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-background/70 border-b border-border">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link to="/" className="font-display text-2xl tracking-wide">
-          <span className="text-primary">Khayyam</span>
-          <span className="text-foreground"> — The Food Pavilion</span>
+        <Link to="/" className="flex items-center gap-3 font-display text-xl tracking-wide">
+          <img src={logo} alt="Khayyam logo" className="h-10 w-10 rounded-sm object-cover" />
+          <span><span className="text-primary">Khayyam</span><span className="hidden sm:inline text-foreground"> — The Food Pavilion</span></span>
         </Link>
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-6">
           {links.map((l) => (
             <Link
               key={l.to}
@@ -39,7 +42,7 @@ export function SiteHeader() {
           </Link>
         </nav>
         <button
-          className="md:hidden text-foreground"
+          className="lg:hidden text-foreground"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -47,7 +50,7 @@ export function SiteHeader() {
         </button>
       </div>
       {open && (
-        <div className="md:hidden bg-background border-t border-border">
+        <div className="lg:hidden bg-background border-t border-border">
           <nav className="flex flex-col p-6 gap-4">
             {links.map((l) => (
               <Link

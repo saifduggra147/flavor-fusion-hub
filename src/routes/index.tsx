@@ -98,12 +98,12 @@ function Index() {
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-primary mb-4">Our story</p>
-            <h2 className="font-display text-4xl md:text-5xl mb-6">A decade of quiet obsession.</h2>
+            <h2 className="font-display text-4xl md:text-5xl mb-6">A quiet obsession with flavour.</h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Saffron &amp; Spice was born from a simple belief — that Pakistani cuisine deserves
-              the same reverence as the world's great culinary traditions. Our kitchen blends
-              century-old recipes with modern technique, sourcing the finest spices from the
-              subcontinent and the freshest produce from local farms.
+              Khayyam — The Food Pavilion was born from a simple belief: that Pakistani cuisine
+              deserves the same reverence as the world's great culinary traditions. Our kitchen
+              blends century-old recipes with modern technique, sourcing the finest spices from
+              the subcontinent and the freshest produce from local farms.
             </p>
             <Link to="/about" className="text-primary uppercase tracking-widest text-sm border-b border-primary pb-1">
               Read our story

@@ -8,9 +8,9 @@ import dessertImg from "@/assets/dish-dessert.jpg";
 export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
-      { title: "Menu — Saffron & Spice" },
+      { title: "Menu — Khayyam, The Food Pavilion" },
       { name: "description", content: "Explore our Pakistani classics, continental dishes, and desserts." },
-      { property: "og:title", content: "Menu — Saffron & Spice" },
+      { property: "og:title", content: "Menu — Khayyam" },
       { property: "og:description", content: "Pakistani, continental and dessert menu." },
     ],
   }),

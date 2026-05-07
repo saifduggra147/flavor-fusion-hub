@@ -35,7 +35,7 @@ function ContactPage() {
           <div className="aspect-square md:aspect-auto rounded-sm overflow-hidden border border-border">
             <iframe
               title="Map"
-              src="https://www.google.com/maps?q=Canal+Expy+Faisal+Town+Canal+Road+Faisalabad&output=embed"
+              src="https://www.google.com/maps?q=F546%2BGW+Faisalabad+Pakistan&output=embed"
               className="w-full h-full min-h-[400px]"
               loading="lazy"
             />

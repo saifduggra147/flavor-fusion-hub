@@ -27,33 +27,95 @@ const cuisines = [
 ];
 
 function Index() {
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 10 }).map((_, i) => ({
+        left: Math.random() * 100,
+        size: 4 + Math.random() * 6,
+        duration: 14 + Math.random() * 12,
+        delay: -Math.random() * 20,
+        drift: (Math.random() - 0.5) * 60,
+      })),
+    []
+  );
+
+  const headlineWords = ["A", "Symphony", "of", "Spice", "and", "Soul"];
+
   return (
     <SiteLayout>
       {/* HERO */}
       <section className="relative -mt-20 h-[100vh] flex items-center justify-center overflow-hidden">
-        <img
-          src={heroImg}
-          alt="Pakistani feast"
-          className="absolute inset-0 w-full h-full object-cover"
-          width={1920}
-          height={1080}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background" />
+        <div
+          className="absolute inset-0 will-change-transform"
+          style={{ transform: `translate3d(0, ${scrollY * 0.6}px, 0)` }}
+        >
+          <img
+            src={heroImg}
+            alt="Pakistani feast"
+            className="absolute inset-0 w-full h-full object-cover animate-kenburns"
+            width={1920}
+            height={1080}
+          />
+        </div>
+
+        {/* Spice particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {particles.map((p, i) => (
+            <span
+              key={i}
+              className="spice-particle"
+              style={{
+                left: `${p.left}%`,
+                width: `${p.size}px`,
+                height: `${p.size}px`,
+                animationDuration: `${p.duration}s`,
+                animationDelay: `${p.delay}s`,
+                ["--drift" as any]: `${p.drift}px`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Base gradient (always-on readability) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/20 to-background" />
+        {/* Breathing overlay at bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-background to-transparent animate-overlay-breathe" />
+
         <div className="relative z-10 text-center px-6 max-w-4xl">
-          <p className="text-xs md:text-sm uppercase tracking-[0.4em] text-primary mb-6">
+          <p className="text-xs md:text-sm uppercase tracking-[0.4em] text-primary mb-6 word-reveal" style={{ animationDelay: "0s" }}>
             Faisalabad · Canal Expy
           </p>
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.05] mb-6">
-            A Symphony of <em className="text-primary not-italic">Spice</em><br />and Soul
+            {headlineWords.slice(0, 3).map((w, i) => (
+              <span key={i} className="word-reveal mr-[0.25em]" style={{ animationDelay: `${0.2 + i * 0.15}s` }}>
+                {w === "Symphony" ? w : w}
+              </span>
+            ))}
+            <span className="word-reveal mr-[0.25em] text-primary" style={{ animationDelay: `${0.2 + 3 * 0.15}s` }}>
+              <em className="not-italic">Spice</em>
+            </span>
+            <br />
+            {headlineWords.slice(4).map((w, i) => (
+              <span key={i} className="word-reveal mr-[0.25em]" style={{ animationDelay: `${0.2 + (4 + i) * 0.15}s` }}>
+                {w}
+              </span>
+            ))}
           </h1>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 word-reveal" style={{ animationDelay: "1.4s" }}>
             Authentic Pakistani heritage, continental craft, and desserts to remember —
             served in an intimate modern setting.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center word-reveal" style={{ animationDelay: "1.6s" }}>
             <Link
               to="/reservations"
-              className="px-8 py-4 bg-primary text-primary-foreground uppercase tracking-widest text-sm hover:opacity-90 transition rounded-sm"
+              className="btn-shimmer px-8 py-4 bg-primary text-primary-foreground uppercase tracking-widest text-sm hover:opacity-90 transition rounded-sm"
             >
               Reserve a table
             </Link>

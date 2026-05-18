@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import heroImg from "@/assets/hero.jpg";
-import dishCutout from "@/assets/hero-dish-cutout.png";
 import pakistaniImg from "@/assets/dish-pakistani.jpg";
 import continentalImg from "@/assets/dish-continental.jpg";
 import dessertImg from "@/assets/dish-dessert.jpg";
@@ -29,185 +28,103 @@ const cuisines = [
 
 function Index() {
   const [scrollY, setScrollY] = useState(0);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 }); // -1..1
-
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    let raf = 0;
-    const onMove = (e: MouseEvent) => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const x = (e.clientX / window.innerWidth) * 2 - 1;
-        const y = (e.clientY / window.innerHeight) * 2 - 1;
-        setMouse({ x, y });
-      });
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
   const particles = useMemo(
     () =>
-      Array.from({ length: 10 }).map(() => ({
+      Array.from({ length: 10 }).map((_, i) => ({
         left: Math.random() * 100,
         size: 4 + Math.random() * 6,
         duration: 14 + Math.random() * 12,
         delay: -Math.random() * 20,
+        drift: (Math.random() - 0.5) * 60,
       })),
     []
   );
 
   const headlineWords = ["A", "Symphony", "of", "Spice", "and", "Soul"];
 
-  const tiltX = (-mouse.y * 4).toFixed(2);
-  const tiltY = (mouse.x * 6).toFixed(2);
-  const bgY = scrollY * 0.3;
-  const bgMouseX = mouse.x * 12;
-  const bgMouseY = mouse.y * 12;
-  const dishScroll = -scrollY * 0.5;
-  const dishMouseX = mouse.x * 24;
-  const dishMouseY = mouse.y * 24;
-  const dishOpacity = Math.max(0, 1 - scrollY / 600);
-
   return (
     <SiteLayout>
       {/* HERO */}
-      <section
-        className="relative -mt-20 h-[100vh] flex items-center justify-center"
-        style={{ perspective: "1000px" }}
-      >
+      <section className="relative -mt-20 h-[100vh] flex items-center justify-center overflow-hidden">
         <div
-          className="absolute inset-0"
-          style={{
-            transform: `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`,
-            transformStyle: "preserve-3d",
-            transition: "transform 0.2s ease-out",
-          }}
+          className="absolute inset-0 will-change-transform"
+          style={{ transform: `translate3d(0, ${scrollY * 0.6}px, 0)` }}
         >
-          {/* BACKGROUND LAYER */}
-          <div
-            className="absolute inset-0 overflow-hidden will-change-transform"
-            style={{ transform: `translate3d(${bgMouseX}px, ${bgY + bgMouseY}px, 0)` }}
-          >
-            <img
-              src={heroImg}
-              alt="Pakistani feast"
-              className="absolute inset-0 w-full h-full object-cover animate-kenburns scale-110"
-              style={{ filter: "brightness(0.55) blur(2px)" }}
-              width={1920}
-              height={1080}
-            />
-            <div
-              className="absolute inset-0"
+          <img
+            src={heroImg}
+            alt="Pakistani feast"
+            className="absolute inset-0 w-full h-full object-cover animate-kenburns"
+            width={1920}
+            height={1080}
+          />
+        </div>
+
+        {/* Spice particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {particles.map((p, i) => (
+            <span
+              key={i}
+              className="spice-particle"
               style={{
-                background:
-                  "radial-gradient(ellipse 55% 65% at 50% 50%, transparent 0%, transparent 35%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.85) 100%)",
+                left: `${p.left}%`,
+                width: `${p.size}px`,
+                height: `${p.size}px`,
+                animationDuration: `${p.duration}s`,
+                animationDelay: `${p.delay}s`,
+                ["--drift" as any]: `${p.drift}px`,
               }}
             />
-          </div>
+          ))}
+        </div>
 
-          {/* Spice particles */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {particles.map((p, i) => (
-              <span
-                key={i}
-                className="spice-particle"
-                style={{
-                  left: `${p.left}%`,
-                  width: `${p.size}px`,
-                  height: `${p.size}px`,
-                  animationDuration: `${p.duration}s`,
-                  animationDelay: `${p.delay}s`,
-                }}
-              />
+        {/* Base gradient (always-on readability) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/20 to-background" />
+        {/* Breathing overlay at bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-background to-transparent animate-overlay-breathe" />
+
+        <div className="relative z-10 text-center px-6 max-w-4xl">
+          <p className="text-xs md:text-sm uppercase tracking-[0.4em] text-primary mb-6 word-reveal" style={{ animationDelay: "0s" }}>
+            Faisalabad · Canal Expy
+          </p>
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.05] mb-6">
+            {headlineWords.slice(0, 3).map((w, i) => (
+              <span key={i} className="word-reveal mr-[0.25em]" style={{ animationDelay: `${0.2 + i * 0.15}s` }}>
+                {w === "Symphony" ? w : w}
+              </span>
             ))}
-          </div>
-
-          {/* Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-background to-transparent animate-overlay-breathe pointer-events-none" />
-
-          {/* TEXT LAYER (z-10) */}
-          <div className="absolute inset-0 z-10 flex items-center justify-center px-6 pointer-events-none">
-            <div className="text-center max-w-4xl pointer-events-auto" style={{ textShadow: "0 4px 24px rgba(0,0,0,0.6)" }}>
-              <p className="text-xs md:text-sm uppercase tracking-[0.4em] text-primary mb-6 word-reveal" style={{ animationDelay: "0s" }}>
-                Faisalabad · Canal Expy
-              </p>
-              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.05] mb-6">
-                {headlineWords.slice(0, 3).map((w, i) => (
-                  <span key={i} className="word-reveal mr-[0.25em]" style={{ animationDelay: `${0.2 + i * 0.15}s` }}>
-                    {w}
-                  </span>
-                ))}
-                <span className="word-reveal mr-[0.25em] text-primary" style={{ animationDelay: `${0.2 + 3 * 0.15}s` }}>
-                  <em className="not-italic">Spice</em>
-                </span>
-                <br />
-                {headlineWords.slice(4).map((w, i) => (
-                  <span key={i} className="word-reveal mr-[0.25em]" style={{ animationDelay: `${0.2 + (4 + i) * 0.15}s` }}>
-                    {w}
-                  </span>
-                ))}
-              </h1>
-              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 word-reveal" style={{ animationDelay: "1.4s" }}>
-                Authentic Pakistani heritage, continental craft, and desserts to remember —
-                served in an intimate modern setting.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center word-reveal" style={{ animationDelay: "1.6s" }}>
-                <Link
-                  to="/reservations"
-                  className="btn-shimmer px-8 py-4 bg-primary text-primary-foreground uppercase tracking-widest text-sm hover:opacity-90 transition rounded-sm"
-                >
-                  Reserve a table
-                </Link>
-                <Link
-                  to="/menu"
-                  className="px-8 py-4 border border-primary text-primary uppercase tracking-widest text-sm hover:bg-primary hover:text-primary-foreground transition rounded-sm"
-                >
-                  Explore menu
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* FOREGROUND DISH (z-20, bursts below hero) */}
-          <div
-            className="absolute left-1/2 -bottom-32 md:-bottom-40 z-20 pointer-events-none will-change-transform"
-            style={{
-              transform: `translate3d(calc(-50% + ${dishMouseX}px), ${dishScroll + dishMouseY}px, 0)`,
-              opacity: dishOpacity,
-            }}
-          >
-            <div className="relative">
-              <div
-                className="absolute left-1/2 top-1/2 animate-bloom pointer-events-none -translate-x-1/2 -translate-y-1/2"
-                style={{
-                  width: "min(70vw, 720px)",
-                  height: "min(70vw, 720px)",
-                  background:
-                    "radial-gradient(circle, rgba(212,160,60,0.35) 0%, rgba(212,160,60,0.15) 35%, transparent 70%)",
-                  filter: "blur(20px)",
-                }}
-              />
-              <img
-                src={dishCutout}
-                alt=""
-                aria-hidden="true"
-                className="relative animate-dish-pop block"
-                style={{ width: "min(55vw, 560px)", height: "auto", transformOrigin: "center bottom" }}
-                width={1024}
-                height={1024}
-              />
-            </div>
+            <span className="word-reveal mr-[0.25em] text-primary" style={{ animationDelay: `${0.2 + 3 * 0.15}s` }}>
+              <em className="not-italic">Spice</em>
+            </span>
+            <br />
+            {headlineWords.slice(4).map((w, i) => (
+              <span key={i} className="word-reveal mr-[0.25em]" style={{ animationDelay: `${0.2 + (4 + i) * 0.15}s` }}>
+                {w}
+              </span>
+            ))}
+          </h1>
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 word-reveal" style={{ animationDelay: "1.4s" }}>
+            Authentic Pakistani heritage, continental craft, and desserts to remember —
+            served in an intimate modern setting.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center word-reveal" style={{ animationDelay: "1.6s" }}>
+            <Link
+              to="/reservations"
+              className="btn-shimmer px-8 py-4 bg-primary text-primary-foreground uppercase tracking-widest text-sm hover:opacity-90 transition rounded-sm"
+            >
+              Reserve a table
+            </Link>
+            <Link
+              to="/menu"
+              className="px-8 py-4 border border-primary text-primary uppercase tracking-widest text-sm hover:bg-primary hover:text-primary-foreground transition rounded-sm"
+            >
+              Explore menu
+            </Link>
           </div>
         </div>
       </section>

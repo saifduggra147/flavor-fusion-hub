@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import heroImg from "@/assets/hero.jpg";
+import dishCutout from "@/assets/hero-dish-cutout.png";
 import pakistaniImg from "@/assets/dish-pakistani.jpg";
 import continentalImg from "@/assets/dish-continental.jpg";
 import dessertImg from "@/assets/dish-dessert.jpg";

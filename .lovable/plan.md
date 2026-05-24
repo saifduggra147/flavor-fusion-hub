@@ -1,64 +1,39 @@
+# Hosting this app from GitHub
 
-# Restaurant Website — Plan
+Before I change anything, I need to flag a hard constraint: **GitHub Pages cannot host this app the way it is today**, and pretending otherwise would just give you another 404.
 
-A modern, elegant multi-page site for your Pakistani restaurant featuring Pakistani, Continental, and Dessert cuisine — plus a working table reservations system.
+## Why GitHub Pages won't work
 
-## Visual direction
+GitHub Pages only serves **static files** (HTML/CSS/JS). It cannot run any server code. This app currently needs a server for:
 
-- **Mood:** Modern & elegant — dark backgrounds, gold/warm accents, large food photography, generous whitespace.
-- **Typography:** Elegant serif for headings (e.g. Playfair Display), clean sans-serif for body (Inter).
-- **Palette:** Deep charcoal/near-black background, warm gold primary, ivory text, subtle saffron accents.
-- **Motion:** Smooth fade/slide reveals on scroll, soft hover transitions on cards/buttons.
+1. **Reservation submissions** — they go through a TanStack server function that talks to the database.
+2. **Admin login + admin dashboard** — protected by server-side auth.
+3. **Confirmation emails** — sent from the server.
+4. **SSR / route rendering** — TanStack Start renders pages on a Cloudflare Worker runtime.
 
-## Pages (each its own route, SEO-friendly)
+If I force a static export to GitHub Pages, the marketing pages (home, menu, contact, about) would load, but **reservations, admin, and emails would all break**. That's almost certainly not what you want for a restaurant site whose main job is taking bookings.
 
-1. **Home (`/`)** — Full-screen hero with signature dish photo, restaurant name, tagline, and CTAs ("View Menu" / "Reserve a Table"). Sections for highlights (3 cuisines), featured dishes, a short story teaser, testimonials, and a reservation strip.
-2. **Menu (`/menu`)** — Tabbed/filterable menu with three categories: **Pakistani**, **Continental**, **Desserts**. Each item shows photo, name, description, price, and optional tags (spicy, vegetarian, chef's pick).
-3. **Gallery (`/gallery`)** — Masonry grid of dish + ambience photos with lightbox view.
-4. **About (`/about`)** — Restaurant story, chef intro, philosophy, location/hours.
-5. **Reservations (`/reservations`)** — Booking form (name, phone, email, date, time, party size, special requests) with confirmation toast and saved record.
-6. **Contact (`/contact`)** — Address, phone, email, hours, embedded map, contact form.
+## Your three realistic options
 
-Shared **header** (logo + nav + "Reserve" CTA) and **footer** (hours, address, social links, quick links) on every page.
+**Option A — Deploy to Vercel from your GitHub repo (recommended).**
+Free tier, 5 minutes of setup, everything keeps working (reservations, admin, emails). You still keep the GitHub repo as the source of truth — Vercel just auto-builds and deploys whenever you push. This is what I'd pick.
 
-## Reservations (functional)
+**Option B — Deploy to Cloudflare Pages from GitHub.**
+Also free, also supports the server runtime this app already targets. Slightly more setup than Vercel but a natural fit because the app is already configured for Cloudflare's Worker runtime.
 
-- Backend powered by **Lovable Cloud** (database + server functions).
-- A `reservations` table stores each booking.
-- Form validates input (name, valid email, phone, future date, party size 1–20) with Zod on both client and server.
-- On submit: saves to DB, shows success toast, sends a confirmation message on screen.
-- Simple **admin view** at `/admin/reservations` (protected by email/password login via Lovable Cloud auth) so you can see all bookings, sorted by date.
+**Option C — Force a static export to GitHub Pages.**
+Marketing pages only. Reservations form, admin panel, and email sending will stop working. I'd need to:
+- Add prerendering config so each route emits an HTML file
+- Add a `404.html` fallback for client-side routing
+- Add a GitHub Actions workflow that builds and pushes to the `gh-pages` branch
+- Disable or hide the reservation form and `/admin` route (otherwise users hit broken pages)
 
-## What I need from you (you said you have everything)
+## What I need from you
 
-Please share when ready — I'll wire it all in:
-1. **Restaurant name + tagline + logo** (image file or text logo is fine).
-2. **Menu items** — name, short description, price, category (Pakistani / Continental / Dessert), and a photo for each (or I'll use elegant stock photos as placeholders for any missing).
-3. **Photos** — 8–15 images for the gallery (food + ambience).
-4. **About text** — story, chef bio (optional).
-5. **Contact info** — address, phone, email, opening hours, social links (Instagram/Facebook).
-6. **Reference website** (optional) — share the link if you have one, I'll match the feel.
+Tell me which option you want:
 
-If anything is missing, I'll use tasteful placeholders that you can swap later — no blocker.
+- **A**: I'll write a short walkthrough for connecting the repo to Vercel (no code changes needed — it just works).
+- **B**: Same thing for Cloudflare Pages.
+- **C**: I'll plan the static-export changes and tell you exactly which features stop working.
 
-## Build approach (how I'll work)
-
-I'll build in approved, reviewable chunks so you always see progress:
-
-1. **Foundation** — design system (colors, fonts), shared header/footer, home page hero & sections.
-2. **Menu page** — full categorized menu with filtering.
-3. **Gallery + About + Contact** pages.
-4. **Reservations** — database, form, validation, success flow.
-5. **Admin reservations view** with login.
-6. **Polish** — animations, mobile responsiveness pass, SEO metadata per page, performance check.
-
-After each step you preview, give feedback, and we refine before moving on.
-
-## Technical notes
-
-- TanStack Start with file-based routing (one route file per page).
-- Tailwind v4 design tokens defined in `src/styles.css` (oklch colors).
-- shadcn/ui components for forms, dialogs, toasts, calendar (date picker).
-- Lovable Cloud for the `reservations` table, RLS policies, and auth for the admin view.
-- Reservation insert handled via a server function with Zod validation.
-- Each route defines its own `head()` metadata (title, description, og tags).
+My strong recommendation is **A**. You already publish through Lovable at `khayamfoodpavilion.lovable.app` which works perfectly — Vercel gives you the same thing from your GitHub repo with a custom domain, for free.

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { SiteLayout } from "@/components/SiteLayout";
-import { createReservation } from "@/server/reservations.functions";
+import { createReservation } from "@/lib/reservations.functions";
 import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/reservations")({
